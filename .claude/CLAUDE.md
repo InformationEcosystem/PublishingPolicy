@@ -12,7 +12,7 @@
 
 | Current Focus | Status |
 |---------------|--------|
-| Org Definitions Tool | Planning |
+| Org Definitions Tool | In Progress (Phase 0-1 complete) |
 
 > **Keep this table updated**: When work focus changes, update silently. This helps future sessions pick up where you left off.
 
@@ -20,8 +20,8 @@
 
 | Setting | Value |
 |---------|-------|
-| **Type** | `static` |
-| **Stack** | GitHub + GitHub Pages |
+| **Type** | `full-stack` |
+| **Stack** | Next.js 16 + Supabase + Vercel |
 | **Status** | `active` |
 
 > **Update this section** when setting up the project:
