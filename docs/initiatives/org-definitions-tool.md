@@ -1,6 +1,6 @@
 # Initiative: Organization Malpublishing Definitions Tool
 
-**Status**: Phase 2 - UI Development
+**Status**: Phase 3 - Auth & Persistence
 **Created**: 2026-01-03
 **Updated**: 2026-01-05
 
@@ -37,21 +37,24 @@ Organizations can:
 - [x] Seed reference data from content archive
 - [x] Enable RLS on user-facing tables
 
-### Phase 2: UI Development ⬅️ CURRENT
-- [ ] Policy builder wizard (main user flow)
-- [ ] Sector template selection
-- [ ] Checklist interface for selecting items
-- [ ] Preview/export functionality
+### Phase 2: UI Development ✅
+- [x] Policy builder wizard (main user flow)
+- [x] Sector template selection
+- [x] Checklist interface for selecting items
+- [x] Preview/save functionality
+- [x] Directory page with sector filtering
+- [x] Edit page with auto-save
+- [x] View page for public policies
 
-### Phase 3: Auth & Persistence
-- [ ] Anonymous policy creation (edit_token URLs)
+### Phase 3: Auth & Persistence ⬅️ CURRENT
+- [x] Anonymous policy creation (edit_token URLs) - DONE
 - [ ] Optional account creation to claim policies
 - [ ] Organization profiles
 
 ### Phase 4: Polish
 - [ ] PDF/Markdown export
-- [ ] Public policy directory (opt-in)
-- [ ] Shareable view links
+- [ ] Public policy directory (opt-in publishing)
+- [ ] Shareable view links - DONE (view_token)
 
 ---
 
@@ -96,8 +99,8 @@ Organizations can:
 
 ## Next Steps
 
-1. Build sector selection landing page
-2. Create policy builder wizard UI
-3. Implement checklist component with facet grouping
-4. Add preview/save functionality
-5. Generate shareable URLs
+1. Add Supabase Auth for optional account creation
+2. Allow users to claim anonymous policies
+3. Enable organization profiles for claimed policies
+4. Add PDF/Markdown export functionality
+5. Add "make public" toggle for policies
