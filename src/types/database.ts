@@ -62,18 +62,21 @@ export interface Database {
         Row: {
           id: string
           text: string
+          description: string | null
           sort_order: number
           created_at: string
         }
         Insert: {
           id?: string
           text: string
+          description?: string | null
           sort_order: number
           created_at?: string
         }
         Update: {
           id?: string
           text?: string
+          description?: string | null
           sort_order?: number
           created_at?: string
         }
@@ -84,7 +87,9 @@ export interface Database {
           name: string
           slug: string
           description: string | null
+          icon: string | null
           default_items: string[]
+          default_guidelines: string[]
           created_at: string
         }
         Insert: {
@@ -92,7 +97,9 @@ export interface Database {
           name: string
           slug: string
           description?: string | null
+          icon?: string | null
           default_items?: string[]
+          default_guidelines?: string[]
           created_at?: string
         }
         Update: {
@@ -100,7 +107,9 @@ export interface Database {
           name?: string
           slug?: string
           description?: string | null
+          icon?: string | null
           default_items?: string[]
+          default_guidelines?: string[]
           created_at?: string
         }
       }
