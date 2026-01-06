@@ -143,15 +143,20 @@ npx supabase gen types typescript --project-id fidjzybkjowguvdlzahs > src/types/
 
 ### CLI Commands
 
+**Important**: Always pass `--token` explicitly - env var inheritance is unreliable through npx.
+
 ```bash
 # Deploy manually
 npx vercel --token=$VERCEL_TOKEN --yes
 
 # Link project
-npx vercel link --yes --project=publishingpolicy
+npx vercel link --yes --project=publishingpolicy --token=$VERCEL_TOKEN
 
 # Connect GitHub repo
-npx vercel git connect https://github.com/InformationEcosystem/PublishingPolicy --yes
+npx vercel git connect https://github.com/InformationEcosystem/PublishingPolicy --yes --token=$VERCEL_TOKEN
+
+# Check account
+npx vercel whoami --token=$VERCEL_TOKEN
 ```
 
 ### Quirks: GitHub Integration
