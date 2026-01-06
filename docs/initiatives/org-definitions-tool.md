@@ -1,6 +1,6 @@
 # Initiative: Publishing Policy Platform
 
-**Status**: Phase 3B - PublishingPolicy.org Rebrand
+**Status**: Phase 3B Complete - Ready for Phase 4 (Auth)
 **Created**: 2026-01-03
 **Updated**: 2026-01-05
 
@@ -48,7 +48,7 @@ Organizations:
 - [x] Edit page with auto-save
 - [x] View page for public policies
 
-### Phase 3B: PublishingPolicy.org Rebrand (Sprints 1-3 Complete)
+### Phase 3B: PublishingPolicy.org Rebrand ✅ COMPLETE
 
 **Sprint 1: Rebrand & Schema** ✅
 - [x] Update app metadata for publishingpolicy.org
@@ -73,11 +73,11 @@ Organizations:
 - [x] Editable generated definitions UI
 - [x] Final save with full policy data
 
-**Sprint 4: Landing Page & Directory** ⬅️ NEXT
-- [ ] Rewrite landing page with positive framing
-- [ ] Add audience expectation messaging
-- [ ] Update directory with commitment summaries
-- [ ] Add "coming soon" certification messaging
+**Sprint 4: Landing Page & Directory** ✅
+- [x] Rewrite landing page with positive framing
+- [x] Add audience expectation messaging
+- [x] Update directory with commitment summaries
+- [x] Add "coming soon" certification messaging
 
 ### Future (Post-MVP)
 - User authentication (claim policies)
@@ -181,3 +181,5 @@ Organizations:
 | `src/app/build/PolicyWizard.tsx` | Main 4-section wizard with generation logic |
 | `src/components/wizard/MalpublishSection.tsx` | Section 4: The Malpublish Moment UI |
 | `src/app/api/policies/route.ts` | API endpoint saving all JSONB fields |
+| `src/app/page.tsx` | Landing page with positive framing |
+| `src/app/directory/page.tsx` | Directory with category filters + commitment summaries |
