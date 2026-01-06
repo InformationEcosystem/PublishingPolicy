@@ -1,7 +1,8 @@
 # Initiative: Organization Malpublishing Definitions Tool
 
-**Status**: Planning
+**Status**: Phase 2 - UI Development
 **Created**: 2026-01-03
+**Updated**: 2026-01-05
 
 ---
 
@@ -22,63 +23,81 @@ Organizations can:
 
 ---
 
-## Potential Checklist Items (from current content)
+## Progress
 
-### Content Violations
-- [ ] Disregarding ethical standards
-- [ ] Spreading false or deceptive claims
-- [ ] Presenting opinions as facts
-- [ ] Failing to retract errors promptly
-- [ ] Misattribution or unauthorized use
-- [ ] Prioritizing sensationalism
-- [ ] Undisclosed AI-generated content
+### Phase 0: Infrastructure ✅
+- [x] Initialize Next.js 16 + Supabase stack
+- [x] Configure project credentials (GitHub, Supabase, Vercel)
+- [x] Set up MCP integrations
+- [x] Configure Vercel with GitHub auto-deploy
 
-### Characteristics
-- [ ] Knowingly presenting false claims as fact
-- [ ] Distorting information to serve an agenda
-- [ ] Failing to attribute sources or committing plagiarism
-- [ ] Sensationalist manipulation of headlines and content
-- [ ] Omitting conflicts of interest
-- [ ] Blurring lines between news, opinion, and advertising
-- [ ] Refusing to issue corrections
-- [ ] Perpetuating harmful stereotypes
-- [ ] Taking quotes out of context
-- [ ] Contributing to misinformation spread
+### Phase 1: Database ✅
+- [x] Design schema (facets, items, policies, organizations)
+- [x] Create migration (`20260104000000_initial_schema.sql`)
+- [x] Seed reference data from content archive
+- [x] Enable RLS on user-facing tables
 
-### Production Standards
-- [ ] Inadequate fact-checking
-- [ ] Poor editorial oversight
-- [ ] Rushed publication processes
+### Phase 2: UI Development ⬅️ CURRENT
+- [ ] Policy builder wizard (main user flow)
+- [ ] Sector template selection
+- [ ] Checklist interface for selecting items
+- [ ] Preview/export functionality
 
-### Contractual
-- [ ] Violating terms of use
-- [ ] Ignoring licensing requirements
-- [ ] Failing to honor contributor commitments
+### Phase 3: Auth & Persistence
+- [ ] Anonymous policy creation (edit_token URLs)
+- [ ] Optional account creation to claim policies
+- [ ] Organization profiles
+
+### Phase 4: Polish
+- [ ] PDF/Markdown export
+- [ ] Public policy directory (opt-in)
+- [ ] Shareable view links
 
 ---
 
-## Open Questions
+## Database Schema
 
-1. **Authentication**: Do orgs need accounts, or is it anonymous/shareable link?
-2. **Storage**: Local storage, database, exportable JSON/PDF?
-3. **Collaboration**: Can multiple people from an org edit together?
-4. **Versioning**: Track changes to definitions over time?
-5. **Templates**: Pre-built templates for newsrooms vs. academia vs. corporate?
-6. **Public directory**: Optional listing of orgs who've adopted definitions?
+| Table | Purpose | Rows |
+|-------|---------|------|
+| `facets` | 4 categories of malpublishing | 4 |
+| `standard_items` | Checklist items organized by facet | 25 |
+| `prevention_guidelines` | Best practices for avoiding malpublishing | 8 |
+| `sector_templates` | Pre-configured item sets by industry | 4 |
+| `policies` | User-created policy documents | - |
+| `policy_items` | Selected items for a policy | - |
+| `policy_guidelines` | Selected guidelines for a policy | - |
+| `organizations` | Claimed organization profiles | - |
+| `user_profiles` | User accounts linked to auth | - |
 
 ---
 
-## Technical Considerations
+## Decisions Made
 
-- Static site with client-side storage? (simplest)
-- Full-stack with user accounts and database? (more features)
-- PDF/Markdown export for internal docs?
+| Question | Answer |
+|----------|--------|
+| Static vs full-stack? | Full-stack (Next.js + Supabase) |
+| Authentication? | Hybrid: anonymous with tokens, optional accounts |
+| Storage? | PostgreSQL via Supabase |
+| Templates? | Yes, 4 sector templates (journalism, academia, corporate, platform) |
+| Collaboration? | Future phase - single editor for MVP |
+
+---
+
+## Sector Templates
+
+| Slug | Name | Default Items |
+|------|------|---------------|
+| `newsroom` | Newsroom | 11 items, 5 guidelines |
+| `academia` | Academic Journal | 11 items, 5 guidelines |
+| `corporate` | Corporate Communications | 10 items, 4 guidelines |
+| `platform` | Platform Trust & Safety | 10 items, 3 guidelines |
 
 ---
 
 ## Next Steps
 
-1. Define MVP feature set
-2. Design UI mockups
-3. Decide on static vs. full-stack approach
-4. Build prototype
+1. Build sector selection landing page
+2. Create policy builder wizard UI
+3. Implement checklist component with facet grouping
+4. Add preview/save functionality
+5. Generate shareable URLs

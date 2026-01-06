@@ -1,8 +1,8 @@
 -- Malpublish Database Schema
 -- Initial migration
 
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable pgcrypto for gen_random_bytes (used for tokens)
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- =============================================================================
 -- REFERENCE DATA TABLES (Seeded, rarely changed)
@@ -10,7 +10,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Facets of malpublishing (4 categories)
 CREATE TABLE facets (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   description TEXT,
   sort_order INTEGER NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE facets (
 
 -- Standard checklist items within each facet
 CREATE TABLE standard_items (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   facet_id UUID REFERENCES facets(id) ON DELETE CASCADE,
   text TEXT NOT NULL,
   category TEXT NOT NULL, -- 'violation', 'characteristic', 'production', 'contractual'
@@ -29,7 +29,7 @@ CREATE TABLE standard_items (
 
 -- Prevention guidelines (8 steps)
 CREATE TABLE prevention_guidelines (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   text TEXT NOT NULL,
   description TEXT,
   sort_order INTEGER NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE prevention_guidelines (
 
 -- Sector templates with pre-selected defaults
 CREATE TABLE sector_templates (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
   description TEXT,
@@ -54,7 +54,7 @@ CREATE TABLE sector_templates (
 
 -- Organizations (optional, for claimed policies)
 CREATE TABLE organizations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
   sector TEXT NOT NULL CHECK (sector IN ('journalism', 'academia', 'corporate', 'platform', 'freelance')),
@@ -67,13 +67,13 @@ CREATE TABLE organizations (
 
 -- Policies (can be anonymous or claimed)
 CREATE TABLE policies (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id UUID REFERENCES organizations(id) ON DELETE SET NULL,
   owner_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
 
   -- Tokens for anonymous access
-  edit_token TEXT UNIQUE DEFAULT encode(gen_random_bytes(32), 'hex'),
-  view_token TEXT UNIQUE DEFAULT encode(gen_random_bytes(16), 'hex'),
+  edit_token TEXT UNIQUE DEFAULT encode(extensions.gen_random_bytes(32), 'hex'),
+  view_token TEXT UNIQUE DEFAULT encode(extensions.gen_random_bytes(16), 'hex'),
 
   name TEXT NOT NULL DEFAULT 'Publishing Ethics Policy',
   description TEXT,
@@ -89,7 +89,7 @@ CREATE TABLE policies (
 
 -- Selected/customized items in a policy
 CREATE TABLE policy_items (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   policy_id UUID REFERENCES policies(id) ON DELETE CASCADE,
   standard_item_id UUID REFERENCES standard_items(id) ON DELETE SET NULL,
   custom_text TEXT, -- For custom items or modified text
@@ -101,7 +101,7 @@ CREATE TABLE policy_items (
 
 -- Selected guidelines in a policy
 CREATE TABLE policy_guidelines (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   policy_id UUID REFERENCES policies(id) ON DELETE CASCADE,
   guideline_id UUID REFERENCES prevention_guidelines(id) ON DELETE SET NULL,
   custom_text TEXT,

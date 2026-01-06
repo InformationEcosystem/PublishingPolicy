@@ -12,7 +12,7 @@
 
 | Current Focus | Status |
 |---------------|--------|
-| Org Definitions Tool | In Progress (Phase 0-1 complete) |
+| Org Definitions Tool | In Progress (Phase 2 - UI Development) |
 
 > **Keep this table updated**: When work focus changes, update silently. This helps future sessions pick up where you left off.
 
@@ -120,8 +120,7 @@ gh pr create --title "..." --body "..."
 |---------------------|------|
 | Understand the stack | `docs/architecture.md` |
 | Debug service issues (OAuth, API) | `docs/integrations.md` |
-| Know why a decision was made | `docs/decisions/` |
-| See active work streams | `docs/initiatives/` |
+| Work streams, decisions | `docs/initiatives/` |
 
 > **Proactive reading**: Don't wait until stuck. Check relevant docs before starting unfamiliar work.
 
@@ -143,8 +142,8 @@ Common task patterns for this project:
 3. Check service dashboard (links in integrations.md)
 
 ### Make a Significant Technical Decision
-1. Document in `docs/decisions/NNNN-title.md` using ADR format
-2. Update index in `docs/decisions/decisions.md`
+1. Document in `## Decisions` section of the relevant initiative
+2. Initiative file IS the decision record
 
 > **Add project-specific recipes** as common patterns emerge.
 
