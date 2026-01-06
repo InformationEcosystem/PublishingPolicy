@@ -48,7 +48,7 @@ Organizations:
 - [x] Edit page with auto-save
 - [x] View page for public policies
 
-### Phase 3B: PublishingPolicy.org Rebrand ⬅️ CURRENT
+### Phase 3B: PublishingPolicy.org Rebrand (Sprints 1-3 Complete)
 
 **Sprint 1: Rebrand & Schema** ✅
 - [x] Update app metadata for publishingpolicy.org
@@ -67,13 +67,13 @@ Organizations:
 - [x] State management for new form structure
 - [x] New /build route with PolicyWizard
 
-**Sprint 3: The Malpublish Moment** (Next)
-- [ ] Transitional screen design
-- [ ] Template substitution engine
-- [ ] Editable generated definitions UI
-- [ ] Final save with full policy data
+**Sprint 3: The Malpublish Moment** ✅
+- [x] Transitional screen design
+- [x] Template substitution engine
+- [x] Editable generated definitions UI
+- [x] Final save with full policy data
 
-**Sprint 4: Landing Page & Directory**
+**Sprint 4: Landing Page & Directory** ⬅️ NEXT
 - [ ] Rewrite landing page with positive framing
 - [ ] Add audience expectation messaging
 - [ ] Update directory with commitment summaries
@@ -178,3 +178,6 @@ Organizations:
 | `src/components/layout/Footer.tsx` | Brand + malpublish definition |
 | `src/types/database.ts` | TypeScript types + new interfaces |
 | `supabase/migrations/20260105000000_publishing_policy_rebrand.sql` | New columns + sectors |
+| `src/app/build/PolicyWizard.tsx` | Main 4-section wizard with generation logic |
+| `src/components/wizard/MalpublishSection.tsx` | Section 4: The Malpublish Moment UI |
+| `src/app/api/policies/route.ts` | API endpoint saving all JSONB fields |

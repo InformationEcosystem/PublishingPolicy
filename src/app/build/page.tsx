@@ -11,15 +11,21 @@ export const metadata = {
 export default async function BuildPolicyPage() {
   const supabase = await createClient()
 
-  // Fetch sector templates
-  const { data: sectors, error } = await supabase
-    .from('sector_templates')
-    .select('slug, name, category')
-    .order('category')
-    .order('name')
+  // Fetch sector templates and commitment templates in parallel
+  const [sectorsResult, templatesResult] = await Promise.all([
+    supabase
+      .from('sector_templates')
+      .select('slug, name, category')
+      .order('category')
+      .order('name'),
+    supabase
+      .from('commitment_templates')
+      .select('*')
+      .order('sort_order'),
+  ])
 
-  if (error) {
-    console.error('Database error:', error)
+  if (sectorsResult.error || templatesResult.error) {
+    console.error('Database error:', sectorsResult.error || templatesResult.error)
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
@@ -39,7 +45,10 @@ export default async function BuildPolicyPage() {
       <Header />
       <main className="flex-1 py-8 px-4">
         <div className="max-w-4xl mx-auto">
-          <PolicyWizard sectors={sectors || []} />
+          <PolicyWizard
+            sectors={sectorsResult.data || []}
+            commitmentTemplates={templatesResult.data || []}
+          />
         </div>
       </main>
       <Footer />

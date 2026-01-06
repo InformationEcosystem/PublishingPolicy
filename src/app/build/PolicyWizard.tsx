@@ -1,18 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import type {
   PublishingIdentity,
   EditorialCommitments,
   AccountabilityFramework,
-  SectorTemplate,
+  MalpublishDefinition,
+  CommitmentTemplate,
 } from '@/types/database'
 import {
   WizardProgress,
   IdentitySection,
   CommitmentsSection,
   AccountabilitySection,
+  MalpublishSection,
 } from '@/components/wizard'
 
 interface PolicyWizardProps {
@@ -21,6 +23,7 @@ interface PolicyWizardProps {
     name: string
     category: string | null
   }>
+  commitmentTemplates: CommitmentTemplate[]
 }
 
 const WIZARD_STEPS = [
@@ -56,14 +59,88 @@ const DEFAULT_ACCOUNTABILITY: AccountabilityFramework = {
   review_schedule: 'annually',
 }
 
-export function PolicyWizard({ sectors }: PolicyWizardProps) {
+// Generate malpublish definitions from commitments
+function generateDefinitions(
+  commitments: EditorialCommitments,
+  accountability: AccountabilityFramework,
+  templates: CommitmentTemplate[]
+): MalpublishDefinition[] {
+  const definitions: MalpublishDefinition[] = []
+
+  // Helper to find template and create definition
+  const addFromTemplate = (type: string, value: string) => {
+    const template = templates.find(
+      t => t.commitment_type === type && t.commitment_value === value
+    )
+    if (template?.malpublish_template) {
+      definitions.push({
+        id: `${type}-${value}`,
+        text: template.malpublish_template,
+        source_commitment: type,
+        is_auto_generated: true,
+        is_custom: false,
+      })
+    }
+  }
+
+  // Sourcing commitment
+  addFromTemplate('sourcing', commitments.sourcing)
+
+  // Accuracy commitment
+  addFromTemplate('accuracy', commitments.accuracy)
+
+  // Transparency commitments (check each boolean)
+  if (commitments.transparency.funding) {
+    addFromTemplate('transparency_funding', 'yes')
+  }
+  if (commitments.transparency.ownership) {
+    addFromTemplate('transparency_ownership', 'yes')
+  }
+  if (commitments.transparency.corrections) {
+    addFromTemplate('transparency_corrections', 'yes')
+  }
+  if (commitments.transparency.editorial_process) {
+    addFromTemplate('transparency_editorial', 'yes')
+  }
+
+  // Independence commitment
+  addFromTemplate('independence', commitments.independence)
+
+  // Correction timeframe
+  addFromTemplate('correction_timeframe', accountability.correction_timeframe)
+
+  // Feedback mechanism (if any mechanism exists)
+  if (accountability.feedback_mechanism.length > 0) {
+    addFromTemplate('feedback_mechanism', 'has_mechanism')
+  }
+
+  // Accountability contact (if provided)
+  if (accountability.accountability_contact.trim()) {
+    addFromTemplate('accountability_contact', 'has_contact')
+  }
+
+  return definitions
+}
+
+export function PolicyWizard({ sectors, commitmentTemplates }: PolicyWizardProps) {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [identity, setIdentity] = useState<PublishingIdentity>(DEFAULT_IDENTITY)
   const [commitments, setCommitments] = useState<EditorialCommitments>(DEFAULT_COMMITMENTS)
   const [accountability, setAccountability] = useState<AccountabilityFramework>(DEFAULT_ACCOUNTABILITY)
+  const [malpublishDefinitions, setMalpublishDefinitions] = useState<MalpublishDefinition[]>([])
+  const [hasGeneratedDefinitions, setHasGeneratedDefinitions] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Generate definitions when entering Section 4
+  useEffect(() => {
+    if (currentStep === 4 && !hasGeneratedDefinitions) {
+      const generated = generateDefinitions(commitments, accountability, commitmentTemplates)
+      setMalpublishDefinitions(generated)
+      setHasGeneratedDefinitions(true)
+    }
+  }, [currentStep, hasGeneratedDefinitions, commitments, accountability, commitmentTemplates])
 
   // Validation for each step
   const isStep1Valid = identity.organization_name.trim() !== '' &&
@@ -111,6 +188,7 @@ export function PolicyWizard({ sectors }: PolicyWizardProps) {
           publishing_identity: identity,
           editorial_commitments: commitments,
           accountability_framework: accountability,
+          malpublish_definitions: malpublishDefinitions,
           // Legacy fields - empty for new wizard
           items: [],
           guidelines: [],
@@ -165,57 +243,25 @@ export function PolicyWizard({ sectors }: PolicyWizardProps) {
         />
       )}
 
-      {/* Section 4: Preview (placeholder for Sprint 3) */}
+      {/* Section 4: The Malpublish Moment */}
       {currentStep === 4 && (
         <div>
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              You&apos;ve Defined What You Stand For
-            </h1>
-            <p className="text-gray-600">
-              Now let&apos;s define what would violate those commitments.
-            </p>
-          </div>
+          <MalpublishSection
+            identity={identity}
+            commitments={commitments}
+            accountability={accountability}
+            templates={commitmentTemplates}
+            definitions={malpublishDefinitions}
+            onChange={setMalpublishDefinitions}
+          />
 
-          <div className="max-w-2xl mx-auto">
-            {/* Summary of selections */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                {identity.organization_name}
-              </h2>
-              <p className="text-sm text-gray-500 mb-4">
-                {identity.publishing_mission || 'No mission statement provided.'}
-              </p>
-
-              <div className="space-y-4 text-sm">
-                <div>
-                  <span className="font-medium text-gray-700">Sector:</span>{' '}
-                  <span className="text-gray-600">
-                    {sectors.find(s => s.slug === identity.sector)?.name || identity.sector}
-                  </span>
-                </div>
-                <div>
-                  <span className="font-medium text-gray-700">Audience:</span>{' '}
-                  <span className="text-gray-600">{identity.primary_audience}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Placeholder for malpublish moment - Sprint 3 */}
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-6">
-              <p className="text-amber-800 text-sm">
-                <strong>Coming next:</strong> Based on your commitments, we&apos;ll generate
-                malpublishing definitions specific to your organization. This feature is
-                being built in Sprint 3.
-              </p>
-            </div>
-
-            {error && (
-              <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4">
+          {error && (
+            <div className="max-w-2xl mx-auto mt-4">
+              <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg">
                 {error}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
 

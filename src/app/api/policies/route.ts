@@ -10,10 +10,20 @@ interface PolicyResult {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, sector, items, guidelines } = body
+    const {
+      name,
+      sector,
+      items,
+      guidelines,
+      // New wizard fields
+      publishing_identity,
+      editorial_commitments,
+      accountability_framework,
+      malpublish_definitions,
+    } = body
 
-    // Validate required fields
-    if (!sector || !items || !Array.isArray(items)) {
+    // Validate required fields (sector is always required)
+    if (!sector) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -23,7 +33,7 @@ export async function POST(request: NextRequest) {
     // Use admin client for server-side insert (bypasses RLS)
     const supabase = createAdminClient()
 
-    // Create the policy
+    // Create the policy with new wizard fields
     const { data, error: policyError } = await supabase
       .from('policies')
       .insert({
@@ -31,6 +41,11 @@ export async function POST(request: NextRequest) {
         sector,
         is_public: false,
         is_claimed: false,
+        // New wizard fields (JSONB columns)
+        publishing_identity: publishing_identity || null,
+        editorial_commitments: editorial_commitments || null,
+        accountability_framework: accountability_framework || null,
+        malpublish_definitions: malpublish_definitions || null,
       } as never)
       .select('id, edit_token, view_token')
       .single()
@@ -46,8 +61,8 @@ export async function POST(request: NextRequest) {
     // Cast to our expected type (bypassing RLS type restrictions)
     const policy = data as unknown as PolicyResult
 
-    // Insert policy items
-    if (items.length > 0) {
+    // Insert policy items (legacy wizard)
+    if (items && Array.isArray(items) && items.length > 0) {
       const policyItems = items.map((itemId: string, index: number) => ({
         policy_id: policy.id,
         standard_item_id: itemId,
