@@ -13,14 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Malpublish - Define Your Publishing Ethics",
-  description: "Enable your organization to define what malpublishing means in your context. Create and publish your publishing ethics policy.",
-  keywords: ["malpublish", "publishing ethics", "misinformation", "journalism standards", "content policy"],
+  title: "Publishing Policy - Define What You Stand For",
+  description: "Every publisher needs a policy. Define your commitments to ethical publishing and create accountability standards for your organization.",
+  keywords: ["publishing policy", "publishing ethics", "editorial standards", "journalism standards", "content policy", "malpublish"],
   openGraph: {
-    title: "Malpublish - Define Your Publishing Ethics",
-    description: "Enable your organization to define what malpublishing means in your context.",
+    title: "Publishing Policy - Define What You Stand For",
+    description: "Every publisher needs a policy. Define your commitments and create accountability standards.",
     type: "website",
+    url: "https://publishingpolicy.org",
   },
+  metadataBase: new URL("https://publishingpolicy.org"),
 };
 
 export default function RootLayout({

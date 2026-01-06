@@ -43,8 +43,8 @@ export function PolicyDocument({
       <div className="border-b border-gray-200 pb-6 mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">{policy.name}</h1>
         <p className="text-gray-500">
-          {SECTOR_LABELS[policy.sector] || policy.sector} ·
-          Created {new Date(policy.created_at).toLocaleDateString()}
+          {SECTOR_LABELS[policy.sector] || policy.sector}
+          {policy.created_at && ` · Created ${new Date(policy.created_at).toLocaleDateString()}`}
         </p>
         {policy.description && (
           <p className="text-gray-600 mt-4">{policy.description}</p>

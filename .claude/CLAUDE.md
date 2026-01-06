@@ -12,7 +12,7 @@
 
 | Current Focus | Status |
 |---------------|--------|
-| Org Definitions Tool | Phase 2 Complete - Ready for Phase 3 (Auth) |
+| PublishingPolicy.org Rebrand | Sprint 1 Complete - Ready for Sprint 2 (New Wizard) |
 
 > **Keep this table updated**: When work focus changes, update silently. This helps future sessions pick up where you left off.
 

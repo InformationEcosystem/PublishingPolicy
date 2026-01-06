@@ -38,7 +38,7 @@ export function SectorCard({ template, isSelected, onSelect }: SectorCardProps) 
         {template.description}
       </p>
       <p className={`text-xs mt-3 ${isSelected ? 'text-white/60' : 'text-gray-400'}`}>
-        {template.default_items.length} items · {template.default_guidelines.length} guidelines
+        {(template.default_items?.length ?? 0)} items · {(template.default_guidelines?.length ?? 0)} guidelines
       </p>
     </button>
   )

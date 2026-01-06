@@ -115,7 +115,7 @@ export default async function DirectoryPage({ searchParams }: PageProps) {
                       {SECTOR_ICONS[policy.sector] || '📋'}
                     </span>
                     <span className="text-xs text-gray-400">
-                      {new Date(policy.created_at).toLocaleDateString()}
+                      {policy.created_at ? new Date(policy.created_at).toLocaleDateString() : ''}
                     </span>
                   </div>
                   <h2 className="font-semibold text-gray-900 mb-1">

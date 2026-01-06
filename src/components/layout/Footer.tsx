@@ -6,9 +6,9 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">Malpublish</h3>
+            <h3 className="font-bold text-lg mb-4">Publishing Policy</h3>
             <p className="text-gray-400 text-sm">
-              Helping organizations define and commit to publishing ethics standards.
+              Every publisher needs a policy. Define your commitments and be held accountable to your own standards.
             </p>
           </div>
           <div>
@@ -30,7 +30,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-          <p>Linguistic Innovation | Neologism</p>
+          <p>&ldquo;Malpublish&rdquo; (/mal-PUB-lish/): Publishing in a manner that violates stated ethical standards.</p>
           <p className="mt-2">Term coined by Roarke Clinton, March 2023</p>
         </div>
       </div>
