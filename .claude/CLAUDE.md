@@ -23,7 +23,7 @@ status: active
 
 | Current Focus | Status |
 |---------------|--------|
-| PublishingPolicy.org Rebrand | Phase 3B Complete - MVP Ready |
+| PublishingPolicy.org Rebrand | Phase 4 Complete - Org Carousel Live |
 
 **Start here**: Read this file, then check `docs/initiatives/` for active work.
 

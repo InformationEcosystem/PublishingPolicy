@@ -79,11 +79,38 @@ Organizations:
 - [x] Update directory with commitment summaries
 - [x] Add "coming soon" certification messaging
 
+### Phase 4: Organization Carousel ✅ COMPLETE
+
+**Visual Refresh**
+- [x] Add brand logo (document with checkmark in SVG)
+- [x] Update hero title to "Your Audience Deserves to Know Your Publishing Policy"
+- [x] Change messaging from "publishers" to "entities"
+- [x] Move 3 pillars above CTA in hero section
+- [x] Add 7th sector category (Individual & Creator)
+
+**Organization Carousel**
+- [x] Create OrganizationCarousel component with auto-scroll
+- [x] Create OrganizationModal for click-to-view details
+- [x] Use Clearbit Logo API for organization logos
+- [x] Seed 13 high-profile organizations (news, platforms, universities)
+- [x] Add transparency_status framing (unknown → unclaimed → claimed)
+
+**DNS Verification System**
+- [x] Add domain, dns_verification_code, dns_verified_at columns
+- [x] Create /api/organizations/[slug]/claim endpoint
+- [x] POST: Generate verification code
+- [x] PUT: Verify DNS TXT record via Google DNS API
+- [x] Update transparency_status on successful verification
+
+**New Database Columns** (organizations table)
+- domain, dns_verification_code, dns_verified_at
+- is_featured, transparency_status
+
 ### Future (Post-MVP)
 - User authentication (claim policies)
 - Paid certification tiers (Verified, Exemplary)
 - PDF/Markdown export
-- Organization profiles
+- Policy version history tracking
 
 ---
 
@@ -99,7 +126,7 @@ Organizations:
 | `policies` | User-created policy documents | - |
 | `policy_items` | Selected items for a policy | - |
 | `policy_guidelines` | Selected guidelines for a policy | - |
-| `organizations` | Claimed organization profiles | - |
+| `organizations` | Organization profiles with DNS verification | 13 featured |
 | `user_profiles` | User accounts linked to auth | - |
 
 **New Policy Columns (Phase 3B):**
@@ -110,6 +137,13 @@ Organizations:
 - `certification_tier`: declared | committed | verified | exemplary
 - `certification_date`: When verified/certified
 - `policy_url`: External URL for verification
+
+**New Organization Columns (Phase 4):**
+- `domain`: Primary web domain for logo + verification
+- `dns_verification_code`: TXT record value for ownership proof
+- `dns_verified_at`: Timestamp of successful verification
+- `is_featured`: Show in homepage carousel
+- `transparency_status`: unknown | unclaimed | claimed | verified
 
 ---
 
@@ -181,6 +215,13 @@ Organizations:
 | `src/app/build/PolicyWizard.tsx` | Main 4-section wizard with generation logic |
 | `src/components/wizard/MalpublishSection.tsx` | Section 4: The Malpublish Moment UI |
 | `src/app/api/policies/route.ts` | API endpoint saving all JSONB fields |
-| `src/app/page.tsx` | Landing page with positive framing |
+| `src/app/page.tsx` | Landing page with org carousel |
 | `src/app/about/page.tsx` | About page (mission, malpublish concept, how it works) |
 | `src/app/directory/page.tsx` | Directory with category filters + commitment summaries |
+| `public/logo.svg` | Brand logo (document with checkmark) |
+| `src/components/home/OrganizationCarousel.tsx` | Auto-scrolling organization logos |
+| `src/components/home/OrganizationModal.tsx` | Click-to-view organization details |
+| `src/components/home/OrganizationShowcase.tsx` | Carousel wrapper component |
+| `src/app/api/organizations/[slug]/route.ts` | GET organization by slug |
+| `src/app/api/organizations/[slug]/claim/route.ts` | DNS verification endpoints |
+| `supabase/migrations/20260106000000_organization_carousel.sql` | Carousel schema + seed data |

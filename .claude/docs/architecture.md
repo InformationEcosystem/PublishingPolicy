@@ -20,10 +20,13 @@
 ## Project Structure
 
 ```
+├── public/
+│   ├── logo.svg                # Brand logo (document with checkmark)
+│   └── favicon.svg             # Same as logo
 ├── src/
 │   ├── app/                    # Next.js App Router pages
 │   │   ├── layout.tsx          # Root layout
-│   │   ├── page.tsx            # Landing page
+│   │   ├── page.tsx            # Landing page with org carousel
 │   │   ├── about/              # About page (mission, malpublish concept)
 │   │   ├── build/              # 4-section wizard
 │   │   │   ├── page.tsx        # Wizard page (fetches sectors + templates)
@@ -33,8 +36,19 @@
 │   │   ├── policy/
 │   │   │   ├── [token]/        # View policy
 │   │   │   └── edit/[token]/   # Edit policy
-│   │   └── api/policies/       # API routes
+│   │   └── api/
+│   │       ├── policies/       # Policy API routes
+│   │       └── organizations/  # Organization API routes
+│   │           ├── route.ts              # GET /api/organizations
+│   │           └── [slug]/
+│   │               ├── route.ts          # GET /api/organizations/[slug]
+│   │               └── claim/route.ts    # POST/PUT DNS verification
 │   ├── components/
+│   │   ├── home/               # Homepage components
+│   │   │   ├── OrganizationCarousel.tsx  # Auto-scrolling org logos
+│   │   │   ├── OrganizationModal.tsx     # Click-to-view modal
+│   │   │   ├── OrganizationShowcase.tsx  # Wrapper component
+│   │   │   └── index.ts
 │   │   ├── layout/             # Header, Footer
 │   │   └── wizard/             # 4-section wizard components
 │   │       ├── WizardProgress.tsx
@@ -84,8 +98,25 @@
 | `policies` | User-created policy documents with edit/view tokens |
 | `policy_items` | Junction table: which standard items are selected for a policy |
 | `policy_guidelines` | Junction table: which guidelines are selected |
-| `organizations` | Optional organization profiles for claimed policies |
+| `organizations` | Organization profiles with DNS verification support |
 | `user_profiles` | Links Supabase Auth users to organizations |
+
+### Organizations Table (Extended for Carousel)
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `id` | UUID | Primary key |
+| `name` | TEXT | Organization name |
+| `slug` | TEXT | URL-friendly identifier |
+| `domain` | TEXT | Primary web domain (e.g., nytimes.com) |
+| `sector` | TEXT | Industry category |
+| `website` | TEXT | Full website URL |
+| `logo_url` | TEXT | Custom logo URL (optional, Clearbit fallback) |
+| `transparency_status` | TEXT | unknown, unclaimed, claimed, verified |
+| `is_featured` | BOOLEAN | Show in homepage carousel |
+| `is_public` | BOOLEAN | Show in public directory |
+| `dns_verification_code` | TEXT | TXT record for domain verification |
+| `dns_verified_at` | TIMESTAMPTZ | When DNS was verified |
 
 ### Policies Table (Extended for New Wizard)
 
@@ -227,3 +258,12 @@ npx supabase gen types typescript --project-id fidjzybkjowguvdlzahs > src/types/
 - **Reference data** (facets, standard_items) is read-only via RLS
 - **Tokens** generated server-side with `gen_random_bytes()`
 - **No PII** stored for anonymous users
+
+---
+
+## External APIs
+
+| Service | Purpose | Endpoint |
+|---------|---------|----------|
+| Clearbit Logo API | Organization logos | `https://logo.clearbit.com/{domain}` |
+| Google DNS API | TXT record verification | `https://dns.google/resolve?name={domain}&type=TXT` |
