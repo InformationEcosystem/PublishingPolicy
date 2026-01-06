@@ -1,4 +1,4 @@
-<!-- Last updated: 2026-01-05 (Phase 3B Complete) | Status: Active -->
+<!-- Last updated: 2026-01-06 (GitHub/Vercel Rename) | Status: Active -->
 
 # Integrations
 
@@ -8,10 +8,10 @@
 
 | Setting | Value |
 |---------|-------|
-| **GitHub Account** | `malpublish` |
-| **Token Variable** | `MALPUBLISH_GITHUB_TOKEN` |
-| **Username Variable** | `MALPUBLISH_GITHUB_USERNAME` |
-| **Credential File** | `~/.env.credentials/malpublish.env` |
+| **GitHub Account** | `InformationEcosystem` |
+| **Token Variable** | `PUBLISHINGPOLICY_GITHUB_TOKEN` |
+| **Username Variable** | `PUBLISHINGPOLICY_GITHUB_USERNAME` |
+| **Credential File** | `~/.env.credentials/publishingpolicy.env` |
 | **Isolation** | direnv - only this project's tokens loaded |
 
 ### Security Rules
@@ -24,8 +24,8 @@
 ### Verification
 
 ```bash
-echo $MALPUBLISH_GITHUB_TOKEN  # Should show token (not NOT_CONFIGURED)
-gh auth status                  # Should show configured account
+echo $PUBLISHINGPOLICY_GITHUB_TOKEN  # Should show token (not NOT_CONFIGURED)
+gh auth status                        # Should show configured account
 ```
 
 **Full credential documentation**: `~/.claude/docs/credential-security.md`
@@ -34,9 +34,9 @@ gh auth status                  # Should show configured account
 
 ## GitHub
 
-**Owner**: `malpublish`
-**Repository**: `website`
-**URL**: https://github.com/malpublish/website
+**Owner**: `InformationEcosystem`
+**Repository**: `PublishingPolicy`
+**URL**: https://github.com/InformationEcosystem/PublishingPolicy
 
 ---
 
@@ -51,8 +51,8 @@ gh auth status                  # Should show configured account
 | Setting | Value |
 |---------|-------|
 | URL | `https://fidjzybkjowguvdlzahs.supabase.co` |
-| Access Token Var | `MALPUBLISH_SUPABASE_ACCESS_TOKEN` |
-| Project Ref Var | `MALPUBLISH_SUPABASE_PROJECT_REF` |
+| Access Token Var | `PUBLISHINGPOLICY_SUPABASE_ACCESS_TOKEN` |
+| Project Ref Var | `PUBLISHINGPOLICY_SUPABASE_PROJECT_REF` |
 
 ### Client Setup
 
@@ -88,9 +88,9 @@ The correct `.mcp.json` configuration for Supabase MCP:
 {
   "supabase": {
     "command": "npx",
-    "args": ["-y", "@supabase/mcp-server-supabase@latest", "--project-ref", "${MALPUBLISH_SUPABASE_PROJECT_REF}"],
+    "args": ["-y", "@supabase/mcp-server-supabase@latest", "--project-ref", "${PUBLISHINGPOLICY_SUPABASE_PROJECT_REF}"],
     "env": {
-      "SUPABASE_ACCESS_TOKEN": "${MALPUBLISH_SUPABASE_ACCESS_TOKEN}"
+      "SUPABASE_ACCESS_TOKEN": "${PUBLISHINGPOLICY_SUPABASE_ACCESS_TOKEN}"
     }
   }
 }
@@ -125,20 +125,20 @@ npx supabase gen types typescript --project-id fidjzybkjowguvdlzahs > src/types/
 
 ## Vercel
 
-**Account**: malpublish (team)
-**Project**: malpublish
-**Dashboard**: https://vercel.com/malpublish/malpublish
+**Account**: InformationEcosystem (team)
+**Project**: publishingpolicy
+**Dashboard**: https://vercel.com/InformationEcosystem/publishingpolicy
 **Live URLs**:
 - https://publishingpolicy.org (primary)
-- https://malpublish.vercel.app (Vercel default)
+- https://publishingpolicy.vercel.app (Vercel default)
 
 ### Configuration
 
 | Setting | Value |
 |---------|-------|
-| Token Variable | `MALPUBLISH_VERCEL_TOKEN` |
-| Project | `malpublish` |
-| GitHub Repo | `malpublish/website` |
+| Token Variable | `PUBLISHINGPOLICY_VERCEL_TOKEN` |
+| Project | `publishingpolicy` |
+| GitHub Repo | `InformationEcosystem/PublishingPolicy` |
 | Auto-deploy | ✅ Connected |
 
 ### CLI Commands
@@ -148,10 +148,10 @@ npx supabase gen types typescript --project-id fidjzybkjowguvdlzahs > src/types/
 npx vercel --token=$VERCEL_TOKEN --yes
 
 # Link project
-npx vercel link --yes --project=malpublish
+npx vercel link --yes --project=publishingpolicy
 
 # Connect GitHub repo
-npx vercel git connect https://github.com/malpublish/website --yes
+npx vercel git connect https://github.com/InformationEcosystem/PublishingPolicy --yes
 ```
 
 ### Quirks: GitHub Integration
@@ -190,14 +190,14 @@ When integrating a new service (Vercel, Supabase, Stripe, etc.), document using 
 #### Configuration
 | Setting | Value |
 |---------|-------|
-| Token Variable | `MALPUBLISH_[SERVICE]_TOKEN` |
+| Token Variable | `PUBLISHINGPOLICY_[SERVICE]_TOKEN` |
 | Project ID | `xxx` |
 
 #### CLI Quirks
 Document any non-obvious CLI behavior:
 ```bash
 # Example: Vercel CLI ignores env var, must use flag
-vercel --prod --token $MALPUBLISH_VERCEL_TOKEN
+vercel --prod --token $PUBLISHINGPOLICY_VERCEL_TOKEN
 ```
 
 #### Client Setup (if multiple clients)

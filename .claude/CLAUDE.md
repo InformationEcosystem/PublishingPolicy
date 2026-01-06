@@ -1,19 +1,19 @@
 ---
-project: Malpublish
+project: PublishingPolicy
 stack: full-stack
 services:
   github:
-    username: "malpublish"
-    repo: "website"
+    username: "InformationEcosystem"
+    repo: "PublishingPolicy"
   supabase:
     project_ref: "fidjzybkjowguvdlzahs"
   vercel:
-    team: "malpublish"
-    project: "malpublish"
+    team: "InformationEcosystem"
+    project: "publishingpolicy"
 status: active
 ---
 
-# Project Configuration - Malpublish
+# Project Configuration - PublishingPolicy
 
 **Inherits**: `~/.claude/CLAUDE.md`
 
@@ -42,9 +42,9 @@ status: active
 ## Credential Check
 
 ```bash
-echo $MALPUBLISH_GITHUB_TOKEN           # Required
-echo $MALPUBLISH_SUPABASE_ACCESS_TOKEN  # Required for MCP
-gh auth status                          # Should show: malpublish
+echo $PUBLISHINGPOLICY_GITHUB_TOKEN           # Required
+echo $PUBLISHINGPOLICY_SUPABASE_ACCESS_TOKEN  # Required for MCP
+gh auth status                                # Should show: InformationEcosystem
 ```
 
 ---
