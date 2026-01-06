@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.1"
+  }
   public: {
     Tables: {
       commitment_templates: {
@@ -63,34 +68,49 @@ export type Database = {
       organizations: {
         Row: {
           created_at: string | null
+          dns_verification_code: string | null
+          dns_verified_at: string | null
+          domain: string | null
           id: string
+          is_featured: boolean | null
           is_public: boolean | null
           logo_url: string | null
           name: string
-          sector: string
+          sector: string | null
           slug: string
+          transparency_status: string | null
           updated_at: string | null
           website: string | null
         }
         Insert: {
           created_at?: string | null
+          dns_verification_code?: string | null
+          dns_verified_at?: string | null
+          domain?: string | null
           id?: string
+          is_featured?: boolean | null
           is_public?: boolean | null
           logo_url?: string | null
           name: string
-          sector: string
+          sector?: string | null
           slug: string
+          transparency_status?: string | null
           updated_at?: string | null
           website?: string | null
         }
         Update: {
           created_at?: string | null
+          dns_verification_code?: string | null
+          dns_verified_at?: string | null
+          domain?: string | null
           id?: string
+          is_featured?: boolean | null
           is_public?: boolean | null
           logo_url?: string | null
           name?: string
-          sector?: string
+          sector?: string | null
           slug?: string
+          transparency_status?: string | null
           updated_at?: string | null
           website?: string | null
         }
@@ -409,19 +429,130 @@ export type Database = {
   }
 }
 
-// Convenience types
-export type Facet = Database['public']['Tables']['facets']['Row']
-export type StandardItem = Database['public']['Tables']['standard_items']['Row']
-export type PreventionGuideline = Database['public']['Tables']['prevention_guidelines']['Row']
-export type SectorTemplate = Database['public']['Tables']['sector_templates']['Row']
-export type Organization = Database['public']['Tables']['organizations']['Row']
-export type Policy = Database['public']['Tables']['policies']['Row']
-export type PolicyItem = Database['public']['Tables']['policy_items']['Row']
-export type PolicyGuideline = Database['public']['Tables']['policy_guidelines']['Row']
-export type UserProfile = Database['public']['Tables']['user_profiles']['Row']
-export type CommitmentTemplate = Database['public']['Tables']['commitment_templates']['Row']
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 
-// New wizard section types
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const
+
+// Custom TypeScript interfaces for wizard JSONB fields
 export interface PublishingIdentity {
   organization_name: string
   sector: string
@@ -456,26 +587,13 @@ export interface MalpublishDefinition {
   is_custom: boolean
 }
 
-export type CertificationTier = 'declared' | 'committed' | 'verified' | 'exemplary'
-
-// Expanded sector list
-export type Sector =
-  // Media & Journalism
-  | 'newsroom' | 'local_news' | 'digital_media' | 'newsletter' | 'podcast' | 'documentary'
-  // Academic & Research
-  | 'academic_journal' | 'university' | 'research_institution' | 'think_tank'
-  // Government & Public Sector
-  | 'federal_agency' | 'state_government' | 'municipal' | 'school_district' | 'public_library'
-  // Corporate & Professional
-  | 'corporate_comms' | 'pr_agency' | 'internal_comms' | 'industry_association'
-  // Platform & Technology
-  | 'social_platform' | 'content_platform' | 'community_forum' | 'ai_content'
-  // Nonprofit & Advocacy
-  | 'nonprofit' | 'foundation' | 'advocacy_org' | 'religious_org'
-  // Individual & Creator
-  | 'independent_journalist' | 'blogger' | 'consultant' | 'creator'
-  // Legacy compatibility
-  | 'journalism' | 'academia' | 'corporate' | 'platform' | 'freelance'
+export interface CommitmentTemplate {
+  id: string
+  commitment_type: string
+  commitment_value: string
+  malpublish_template: string | null
+  sort_order: number
+}
 
 export type SectorCategory =
   | 'Media & Journalism'
@@ -485,3 +603,14 @@ export type SectorCategory =
   | 'Platform & Technology'
   | 'Nonprofit & Advocacy'
   | 'Individual & Creator'
+  | 'Other'
+
+// Using Tables<'sector_templates'> for the full type
+export type SectorTemplate = Tables<'sector_templates'>
+
+// Convenience type aliases for table rows
+export type Policy = Tables<'policies'>
+export type Organization = Tables<'organizations'>
+export type Facet = Tables<'facets'>
+export type StandardItem = Tables<'standard_items'>
+export type PreventionGuideline = Tables<'prevention_guidelines'>

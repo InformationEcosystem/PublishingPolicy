@@ -13,12 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Publishing Policy - Define What You Stand For",
-  description: "Every publisher needs a policy. Define your commitments to ethical publishing and create accountability standards for your organization.",
-  keywords: ["publishing policy", "publishing ethics", "editorial standards", "journalism standards", "content policy", "malpublish"],
+  title: "Publishing Policy - Your Audience Deserves to Know",
+  description: "Every entity that publishes content needs a policy. From newsrooms to nonprofits, universities to YouTubers, platforms to personal blogs. Define your commitments and create accountability standards.",
+  keywords: ["publishing policy", "publishing ethics", "editorial standards", "journalism standards", "content policy", "malpublish", "transparency"],
+  icons: {
+    icon: "/favicon.svg",
+  },
   openGraph: {
-    title: "Publishing Policy - Define What You Stand For",
-    description: "Every publisher needs a policy. Define your commitments and create accountability standards.",
+    title: "Publishing Policy - Your Audience Deserves to Know",
+    description: "Every entity that publishes content needs a policy. Define your commitments and create accountability standards.",
     type: "website",
     url: "https://publishingpolicy.org",
   },

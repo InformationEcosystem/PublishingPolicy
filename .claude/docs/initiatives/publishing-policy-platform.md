@@ -1,8 +1,8 @@
 # Initiative: Publishing Policy Platform
 
-**Status**: Phase 3B Complete - Ready for Phase 4 (Auth)
+**Status**: MVP Complete - Live at publishingpolicy.org
 **Created**: 2026-01-03
-**Updated**: 2026-01-05
+**Updated**: 2026-01-06
 
 ---
 
@@ -182,4 +182,5 @@ Organizations:
 | `src/components/wizard/MalpublishSection.tsx` | Section 4: The Malpublish Moment UI |
 | `src/app/api/policies/route.ts` | API endpoint saving all JSONB fields |
 | `src/app/page.tsx` | Landing page with positive framing |
+| `src/app/about/page.tsx` | About page (mission, malpublish concept, how it works) |
 | `src/app/directory/page.tsx` | Directory with category filters + commitment summaries |

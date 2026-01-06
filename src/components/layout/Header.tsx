@@ -1,11 +1,20 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function Header() {
   return (
     <header className="bg-[#0074ff] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-xl font-bold">
+          <Link href="/" className="flex items-center gap-2 text-xl font-bold">
+            <Image
+              src="/logo.svg"
+              alt=""
+              width={28}
+              height={28}
+              className="text-white"
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
             Publishing Policy
           </Link>
           <nav className="flex items-center gap-6">

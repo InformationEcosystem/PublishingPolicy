@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { OrganizationShowcase } from '@/components/home'
+import { createClient } from '@/lib/supabase/server'
 
 const SECTOR_CATEGORIES = [
   {
@@ -25,7 +27,7 @@ const SECTOR_CATEGORIES = [
   },
   {
     name: 'Platform & Technology',
-    examples: 'Social platforms, forums, AI content',
+    examples: 'Facebook, TikTok, forums, AI tools',
     icon: '💻',
   },
   {
@@ -33,25 +35,56 @@ const SECTOR_CATEGORIES = [
     examples: 'Foundations, advocacy orgs',
     icon: '🤝',
   },
+  {
+    name: 'Individual & Creator',
+    examples: 'YouTubers, bloggers, Substacks',
+    icon: '✍️',
+  },
 ]
 
-export default function Home() {
+export default async function Home() {
+  // Fetch featured organizations for carousel
+  const supabase = await createClient()
+  const { data: organizations } = await supabase
+    .from('organizations')
+    .select('id, name, slug, domain, sector, logo_url, transparency_status')
+    .eq('is_featured', true)
+    .eq('is_public', true)
+    .order('name')
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      {/* Hero Section - Positive Framing */}
-      <section className="bg-[#0074ff] text-white py-20 px-4">
+      {/* Hero Section */}
+      <section className="bg-[#0074ff] text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Define What You Stand For
+            Your Audience Deserves to Know Your Publishing Policy
           </h1>
-          <p className="text-xl md:text-2xl mb-4 opacity-90">
-            Every publisher needs a policy. Create yours in minutes.
+          <p className="text-xl md:text-2xl mb-8 opacity-90">
+            From newsrooms to nonprofits, universities to YouTubers, governments to Substacks, platforms like Facebook to personal blogs.
           </p>
-          <p className="text-lg mb-8 opacity-80">
-            Your commitments. Your standards. Your accountability.
-          </p>
+
+          {/* Three Pillars - Compact in Hero */}
+          <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-3xl mx-auto">
+            <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+              <div className="text-2xl mb-2">🎯</div>
+              <h3 className="font-semibold">Your Identity</h3>
+              <p className="text-sm opacity-80">Who you are and who you serve</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+              <div className="text-2xl mb-2">📝</div>
+              <h3 className="font-semibold">Your Commitments</h3>
+              <p className="text-sm opacity-80">How you verify and ensure accuracy</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+              <div className="text-2xl mb-2">⚖️</div>
+              <h3 className="font-semibold">Your Accountability</h3>
+              <p className="text-sm opacity-80">How you correct and stay accountable</p>
+            </div>
+          </div>
+
           <Link
             href="/build"
             className="inline-block bg-white text-[#0074ff] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
@@ -61,46 +94,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What You'll Define */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">
-            What Your Audience Deserves to Know
-          </h2>
-          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-            When someone reads your content, they trust you. A publishing policy makes that trust explicit.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🎯</span>
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Your Identity</h3>
-              <p className="text-gray-600">
-                Who you are, who you serve, and what drives your publishing mission.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">📝</span>
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Your Commitments</h3>
-              <p className="text-gray-600">
-                How you verify sources, ensure accuracy, and maintain independence.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">⚖️</span>
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Your Accountability</h3>
-              <p className="text-gray-600">
-                How you correct errors, receive feedback, and stay accountable.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Organization Carousel */}
+      {organizations && organizations.length > 0 && (
+        <OrganizationShowcase organizations={organizations} />
+      )}
 
       {/* The Malpublish Moment */}
       <section className="py-16 px-4 bg-gray-50">
@@ -131,10 +128,10 @@ export default function Home() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-4">
-            Built for Every Sector
+            Built for Every Entity
           </h2>
           <p className="text-center text-gray-600 mb-12">
-            31 templates across 7 categories. Start with one designed for your industry.
+            31 templates across 7 categories. Start with one designed for your organization.
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {SECTOR_CATEGORIES.map((sector) => (
@@ -191,7 +188,7 @@ export default function Home() {
             Ready to Define Your Standards?
           </h2>
           <p className="text-lg mb-8 opacity-90">
-            Join organizations committed to transparent, accountable publishing.
+            Join the movement toward transparent, accountable publishing.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

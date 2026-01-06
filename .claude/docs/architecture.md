@@ -1,4 +1,4 @@
-<!-- Last updated: 2026-01-05 | Status: Active -->
+<!-- Last updated: 2026-01-06 | Status: Active -->
 
 # Architecture
 
@@ -24,11 +24,12 @@
 │   ├── app/                    # Next.js App Router pages
 │   │   ├── layout.tsx          # Root layout
 │   │   ├── page.tsx            # Landing page
-│   │   ├── build/              # New 4-section wizard
+│   │   ├── about/              # About page (mission, malpublish concept)
+│   │   ├── build/              # 4-section wizard
 │   │   │   ├── page.tsx        # Wizard page (fetches sectors + templates)
 │   │   │   └── PolicyWizard.tsx
 │   │   ├── directory/          # Public policy listing
-│   │   ├── new/                # Legacy 3-step wizard
+│   │   ├── new/                # Legacy 3-step wizard (deprecated)
 │   │   ├── policy/
 │   │   │   ├── [token]/        # View policy
 │   │   │   └── edit/[token]/   # Edit policy
