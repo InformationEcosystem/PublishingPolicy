@@ -1,4 +1,6 @@
-# Malpublish - Documentation
+<!-- Last updated: 2026-01-05 | Status: Active -->
+
+# Publishing Policy - Documentation
 
 Progressive disclosure docs for this project.
 
@@ -9,9 +11,10 @@ Progressive disclosure docs for this project.
 | Topic | File |
 |-------|------|
 | Integrations (services, credentials) | [integrations.md](./integrations.md) |
-| Architecture (stack, patterns) | [architecture.md](./architecture.md) |
-| Architecture Decision Records | [decisions/](./decisions/) |
-| Current initiatives | [initiatives/](./initiatives/) |
+| Architecture (stack, patterns, schema) | [architecture.md](./architecture.md) |
+| Active work streams | [initiatives/](./initiatives/) |
+| User research (JTBD) | [users/](./users/) |
+| Archived content | [artifacts/](./artifacts/) |
 
 ---
 
@@ -32,7 +35,8 @@ Progressive disclosure docs for this project.
 |----------|----------------|-----------------|
 | architecture.md | On significant pattern changes | Never (keep current) |
 | integrations.md | When services added/changed | Never |
-| decisions/*.md | Never modify after Accepted | Mark Deprecated if reversed |
-| initiatives/*.md | Continuously during work | Move to decisions/ or delete when complete |
+| initiatives/*.md | Continuously during work | Archive when complete (preserves decisions) |
+| users/*.md | When user research conducted | Update, don't archive |
+| artifacts/*.md | When adding reference content | Never (static reference) |
 
-> **Keep docs fresh**: Update timestamps (`<\!-- Last updated: -->`) when editing. Stale docs are worse than no docs.
+> **Keep docs fresh**: Update timestamps (`<!-- Last updated: -->`) when editing. Stale docs are worse than no docs.
