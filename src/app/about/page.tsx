@@ -13,21 +13,21 @@ export default function AboutPage() {
       <Header />
 
       {/* Hero */}
-      <section className="bg-[#0074ff] text-white py-16 px-4">
+      <section className="bg-[#0074ff] text-white py-10 sm:py-14 md:py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">
             About Publishing Policy
           </h1>
-          <p className="text-xl opacity-90">
+          <p className="text-lg sm:text-xl opacity-90">
             Bringing accountability to publishing through transparent, self-defined standards.
           </p>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="py-16 px-4">
+      <section className="py-10 sm:py-14 md:py-16 px-4">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Mission</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Our Mission</h2>
           <p className="text-gray-700 mb-4">
             Every publisher—from major newsrooms to independent bloggers—makes implicit promises
             to their audience about how they create and verify content. Publishing Policy makes
@@ -47,10 +47,10 @@ export default function AboutPage() {
       </section>
 
       {/* The Concept */}
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-10 sm:py-14 md:py-16 px-4 bg-gray-50">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">The Malpublish Concept</h2>
-          <div className="bg-white p-6 rounded-lg border-l-4 border-[#0074ff] mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">The Malpublish Concept</h2>
+          <div className="bg-white p-4 sm:p-5 md:p-6 rounded-lg border-l-4 border-[#0074ff] mb-4 sm:mb-6">
             <p className="text-sm text-gray-500 italic mb-2">
               &ldquo;Malpublish&rdquo; /mal-PUB-lish/ (verb)
             </p>
@@ -76,9 +76,9 @@ export default function AboutPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 px-4">
+      <section className="py-10 sm:py-14 md:py-16 px-4">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">How It Works</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">How It Works</h2>
           <div className="space-y-6">
             <div className="flex gap-4">
               <div className="flex-shrink-0 w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
@@ -132,58 +132,58 @@ export default function AboutPage() {
       </section>
 
       {/* Who It's For */}
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-10 sm:py-14 md:py-16 px-4 bg-gray-50">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Who It&apos;s For</h2>
-          <p className="text-gray-700 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Who It&apos;s For</h2>
+          <p className="text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
             Publishing Policy serves any organization or individual that publishes content
             and wants to be transparent about their standards:
           </p>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <span className="text-2xl mb-2 block">📰</span>
-              <h3 className="font-semibold">Media & Journalism</h3>
-              <p className="text-sm text-gray-500">Newsrooms, podcasts, newsletters</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">📰</span>
+              <h3 className="font-semibold text-sm sm:text-base">Media & Journalism</h3>
+              <p className="text-xs sm:text-sm text-gray-500">Newsrooms, podcasts, newsletters</p>
             </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <span className="text-2xl mb-2 block">🎓</span>
-              <h3 className="font-semibold">Academic & Research</h3>
-              <p className="text-sm text-gray-500">Journals, universities, think tanks</p>
+            <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🎓</span>
+              <h3 className="font-semibold text-sm sm:text-base">Academic & Research</h3>
+              <p className="text-xs sm:text-sm text-gray-500">Journals, universities, think tanks</p>
             </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <span className="text-2xl mb-2 block">🏛️</span>
-              <h3 className="font-semibold">Government & Public</h3>
-              <p className="text-sm text-gray-500">Agencies, municipalities, libraries</p>
+            <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🏛️</span>
+              <h3 className="font-semibold text-sm sm:text-base">Government & Public</h3>
+              <p className="text-xs sm:text-sm text-gray-500">Agencies, municipalities, libraries</p>
             </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <span className="text-2xl mb-2 block">🏢</span>
-              <h3 className="font-semibold">Corporate & Professional</h3>
-              <p className="text-sm text-gray-500">PR, internal comms, associations</p>
+            <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🏢</span>
+              <h3 className="font-semibold text-sm sm:text-base">Corporate & Professional</h3>
+              <p className="text-xs sm:text-sm text-gray-500">PR, internal comms, associations</p>
             </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <span className="text-2xl mb-2 block">💻</span>
-              <h3 className="font-semibold">Platform & Technology</h3>
-              <p className="text-sm text-gray-500">Social platforms, forums, AI content</p>
+            <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">💻</span>
+              <h3 className="font-semibold text-sm sm:text-base">Platform & Technology</h3>
+              <p className="text-xs sm:text-sm text-gray-500">Social platforms, forums, AI content</p>
             </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <span className="text-2xl mb-2 block">🤝</span>
-              <h3 className="font-semibold">Nonprofit & Advocacy</h3>
-              <p className="text-sm text-gray-500">Foundations, advocacy orgs</p>
+            <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🤝</span>
+              <h3 className="font-semibold text-sm sm:text-base">Nonprofit & Advocacy</h3>
+              <p className="text-xs sm:text-sm text-gray-500">Foundations, advocacy orgs</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Contact */}
-      <section className="py-16 px-4">
+      <section className="py-10 sm:py-14 md:py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-          <p className="text-gray-700 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Get In Touch</h2>
+          <p className="text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
             Have questions, feedback, or want to learn more about Publishing Policy?
           </p>
           <a
             href="mailto:stopmalpublishing@gmail.com"
-            className="text-[#0074ff] hover:underline font-medium"
+            className="text-[#0074ff] hover:underline font-medium text-sm sm:text-base"
           >
             stopmalpublishing@gmail.com
           </a>
@@ -191,17 +191,17 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-4 bg-[#0074ff] text-white text-center">
+      <section className="py-10 sm:py-14 md:py-16 px-4 bg-[#0074ff] text-white text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
             Ready to Define Your Standards?
           </h2>
-          <p className="mb-6 opacity-90">
+          <p className="mb-4 sm:mb-6 opacity-90 text-sm sm:text-base">
             Create your publishing policy in minutes.
           </p>
           <Link
             href="/build"
-            className="inline-block bg-white text-[#0074ff] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            className="inline-block bg-white text-[#0074ff] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm sm:text-base"
           >
             Build Your Policy
           </Link>

@@ -70,6 +70,19 @@ npm run build        # Production build
 
 ---
 
+## Deploy
+
+**Auto-deploy**: After completing work, push to main and deploy automatically. Don't wait for user to say "deploy".
+
+```bash
+git push origin main                    # Triggers Vercel preview
+vercel --prod --token $VERCEL_TOKEN     # Deploy to production
+```
+
+**Verify**: Check https://publishingpolicy.org after deploy.
+
+---
+
 ## MCP Servers
 
 | Server | Purpose |
@@ -81,4 +94,4 @@ npm run build        # Production build
 
 ## Session Lifecycle
 
-1. `git status` → 2. Work (use TodoWrite) → 3. Commit → 4. Verify
+1. `git status` → 2. Work (use TodoWrite) → 3. Commit → 4. Push → 5. Deploy → 6. Verify
